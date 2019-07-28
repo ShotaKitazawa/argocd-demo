@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test
+  namespace: test
+  generateName: integration-test-
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 1
+  template:
+    spec:
+      serviceAccountName: test
+      volumes:
+        - name: script
+          configMap:
+            name: script
+      restartPolicy: Never
+      containers:
+        - name: hook-jenkins
+          image: gcr.io/cloud-builders/kubectl
+          imagePullPolicy: Always
+          command: ["bash", "/mnt/script/hook-jenkins.sh"]
+          volumeMounts:
+            - mountPath: /mnt/script
+              name: script
+          envFrom:
+            - secretRef:
+              name: information

@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+data:
+  hook-jenkins.sh: |
+    curl -u ${USER}:${PASSWD} https://${URL}/job/test/build?token=$TOKEN
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: script
+  namespace: test
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: test
+  namespace: test
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: test
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: test
+  namespace: test
+
