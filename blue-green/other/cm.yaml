@@ -2,7 +2,7 @@
 apiVersion: v1
 data:
   hook-jenkins.sh: |
-    curl -k -u ${USER}:${PASSWD} https://${URL}/job/test/build?token=$TOKEN
+    curl -k -u ${USER}:${PASSWD} http://${URL}/job/test/build?token=$TOKEN
 kind: ConfigMap
 metadata:
   creationTimestamp: null
