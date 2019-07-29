@@ -2,6 +2,7 @@
 apiVersion: v1
 data:
   hook-jenkins.sh: |
+    apt update -y
     apt install -y curl
     curl -k -u ${USER}:${PASSWD} http://${URL}/job/test/build?token=$TOKEN
 kind: ConfigMap
