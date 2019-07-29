@@ -21,7 +21,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: hook-jenkins
-          image: debian:stable-slim
+          image: debian:4.4.5-slim
           imagePullPolicy: Always
           command: ["bash", "/mnt/script/hook-jenkins.sh"]
           volumeMounts:
