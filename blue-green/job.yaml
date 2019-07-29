@@ -21,7 +21,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: hook-jenkins
-          image: gcr.io/cloud-builders/kubectl
+          image: debian:stable-slim
           imagePullPolicy: Always
           command: ["bash", "/mnt/script/hook-jenkins.sh"]
           volumeMounts:
